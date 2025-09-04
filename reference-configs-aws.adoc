@@ -1,0 +1,277 @@
+---
+sidebar: sidebar 
+permalink: reference-configs-aws.html 
+keywords: ec2, instance, type, explore, standard, premium, byol, capacity, maximum, virtual machine, Cloud Volumes ONTAP, supported, configurations, sizes, disks, networking, bandwidth, professional package 
+summary: In AWS werden mehrere Cloud Volumes ONTAP -Konfigurationen unterstützt. 
+---
+= Unterstützte Konfigurationen für Cloud Volumes ONTAP in AWS
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+In AWS werden mehrere Cloud Volumes ONTAP -Konfigurationen unterstützt.
+
+
+
+== Unterstützte Anzahl von Knoten
+
+Cloud Volumes ONTAP ist in AWS als Einzelknotensystem und als hochverfügbares (HA) Knotenpaar für Fehlertoleranz und unterbrechungsfreien Betrieb verfügbar.
+
+Das Upgrade eines Einzelknotensystems auf ein HA-Paar wird nicht unterstützt.  Wenn Sie zwischen einem Einzelknotensystem und einem HA-Paar wechseln möchten, müssen Sie ein neues System bereitstellen und Daten vom vorhandenen System auf das neue System replizieren.
+
+
+
+== Unterstützter Speicher
+
+Cloud Volumes ONTAP unterstützt mehrere Arten von EBS-Festplatten und S3-Objektspeicher für die Datenschichtung.  Die maximale Speicherkapazität wird durch die von Ihnen gewählte Lizenz bestimmt.
+
+
+
+=== Speicherunterstützung nach Lizenz
+
+Jede Lizenz unterstützt eine andere maximale Systemkapazität. Die maximale Systemkapazität umfasst festplattenbasierten Speicher sowie Objektspeicher, der für die Datenschichtung verwendet wird.  NetApp unterstützt das Überschreiten dieses Limits nicht.
+
+[role="tabbed-block"]
+====
+.Kapazitätsbasierte Lizenzen
+--
+[cols="h,d,d"]
+|===
+|  | Freemium | Kapazitätsbasierte Lizenz 
+
+
+ a| 
+*Maximale Systemkapazität* (Festplatten + Objektspeicher) ^1^
+| 500 GiB | Flexibel ^2^ 
+
+
+ a| 
+*Unterstützte Datenträgertypen*
+ a| 
+* Allzweck-SSD (gp3 und gp2) ^3^,^5^
+* Bereitgestellte IOPS-SSD (io1) ^3^
+* Durchsatzoptimierte Festplatte (st1) ^4^
+
+
+
+
+ a| 
+*Kalte Datenschichtung auf S3*
+ a| 
+Unterstützt
+
+|===
+Hinweise:
+
+. Bei einem HA-Paar gilt die Kapazitätsgrenze für das gesamte HA-Paar.  Es ist nicht pro Knoten.  Wenn Sie beispielsweise die Premium-Lizenz verwenden, können Sie zwischen beiden Knoten über eine Kapazität von bis zu 368 TiB verfügen.
+. Bei einigen Konfigurationen verhindern Festplattenlimits, dass Sie die Kapazitätsgrenze erreichen, wenn Sie nur Festplatten verwenden.  In diesen Fällen können Sie die Kapazitätsgrenze erreichen, indem https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-data-tiering.html["Tiering inaktiver Daten in den Objektspeicher"^] .  Informationen zu Festplattenlimits finden Sie unterlink:reference-limits-aws.html["Speicherlimits"] .
++
+Mit der kapazitätsbasierten Lizenzierung unterstützt jedes Cloud Volumes ONTAP -System die Einstufung in den Objektspeicher. Die gesamte abgestufte Kapazität kann bis zum Bucket-Limit des Cloud-Anbieters skaliert werden. Obwohl die Lizenz keine Kapazitätsbeschränkungen vorsieht, sollten Sie die https://www.netapp.com/pdf.html?item=/media/17239-tr-4598.pdf["Best Practices für FabricPool"^] um optimale Leistung, Zuverlässigkeit und Kosteneffizienz bei der Konfiguration und Verwaltung der Tiering-Ebene sicherzustellen.
+
+. Bei Verwendung von SSDs mit allen Cloud Volumes ONTAP -Konfigurationen wird eine verbesserte Schreibleistung aktiviert.
+. Bei Verwendung von durchsatzoptimierten HDDs (st1) wird das Tiering von Daten in Objektspeicher nicht empfohlen.
+. Cloud Volumes ONTAP -Konfigurationen in AWS Local Zones unterstützen nur den Festplattentyp General Purpose SSD (gp2).  In Cloud Volumes ONTAP in AWS Local Zones werden keine anderen Datenträgertypen unterstützt.
+
+
+--
+.Knotenbasierte Lizenzen
+--
+[cols="h,d,d,d,d"]
+|===
+|  | PAYGO Entdecken | PAYGO-Standard | PAYGO Premium | Knotenbasiertes BYOL 
+
+
+| Maximale Systemkapazität (Festplatten + Objektspeicher) | 2 TiB | 10 TiB | 368 TiB ^2^ | 368 TiB pro Lizenz ^2^ 
+
+
+| Unterstützte Datenträgertypen  a| 
+* Allzweck-SSD (gp3 und gp2) ^3^,^5^
+* Bereitgestellte IOPS-SSD (io1) ^3^
+* Durchsatzoptimierte Festplatte (st1) ^4^
+
+
+
+
+| Kalte Datenschichtung auf S3 | Nicht unterstützt 3+| Unterstützt 
+|===
+Hinweise:
+
+. Bei einem HA-Paar gilt die Kapazitätsgrenze für das gesamte HA-Paar.  Es ist nicht pro Knoten.  Wenn Sie beispielsweise die Premium-Lizenz verwenden, können Sie zwischen beiden Knoten über eine Kapazität von bis zu 368 TiB verfügen.
+. Bei einigen Konfigurationen verhindern Festplattenlimits, dass Sie die Kapazitätsgrenze erreichen, wenn Sie nur Festplatten verwenden.  In diesen Fällen können Sie die Kapazitätsgrenze erreichen, indem https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-data-tiering.html["Tiering inaktiver Daten in den Objektspeicher"^] .  Informationen zu Festplattenlimits finden Sie unterlink:reference-limits-aws.html["Speicherlimits"] .
+. Eine verbesserte Schreibleistung wird bei Verwendung von SSDs mit allen Cloud Volumes ONTAP -Konfigurationen aktiviert, mit Ausnahme von PAYGO Explore.
+. Bei Verwendung von durchsatzoptimierten HDDs (st1) wird das Tiering von Daten in Objektspeicher nicht empfohlen.
+. Cloud Volumes ONTAP -Konfigurationen in AWS Local Zones unterstützen nur den Festplattentyp General Purpose SSD (gp2).
+
+
+--
+====
+
+
+=== Unterstützte Datenträgergrößen
+
+In AWS kann ein Aggregat bis zu 6 Festplatten enthalten, die alle dieselbe Größe haben.  Wenn Sie jedoch über eine Konfiguration verfügen, die die Funktion „Amazon EBS Elastic Volumes“ unterstützt, kann ein Aggregat bis zu 8 Festplatten enthalten. https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-aws-elastic-volumes.html["Erfahren Sie mehr über die Unterstützung für Elastic Volumes"^]
+
+[cols="3*"]
+|===
+| Allzweck-SSDs (gp3 und gp2) | Bereitgestellte IOPS-SSDs (io1) | Durchsatzoptimierte HDDs (st1) 
+
+
+ a| 
+* 100 GiB
+* 500 GiB
+* 1 TiB
+* 2 TiB
+* 4 TiB
+* 6 TiB
+* 8 TiB
+* 16 TiB
+
+ a| 
+* 100 GiB
+* 500 GiB
+* 1 TiB
+* 2 TiB
+* 4 TiB
+* 6 TiB
+* 8 TiB
+* 16 TiB
+
+ a| 
+* 500 GiB
+* 1 TiB
+* 2 TiB
+* 4 TiB
+* 6 TiB
+* 8 TiB
+* 16 TiB
+
+
+|===
+
+
+== Unterstützte EC2-Berechnung
+
+Jede Cloud Volumes ONTAP -Lizenz unterstützt verschiedene EC2-Instanztypen.  Zu Ihrer Information zeigt die folgende Tabelle die vCPU, den RAM und die Bandbreite für jeden unterstützten Instanztyp. https://aws.amazon.com/ec2/instance-types/["Die aktuellsten und vollständigen Informationen zu EC2-Instanztypen finden Sie bei AWS."^] .
+
+Cloud Volumes ONTAP kann entweder auf einer reservierten oder einer On-Demand-EC2-Instanz ausgeführt werden.  Lösungen, die andere Instanztypen verwenden, werden nicht unterstützt.
+
+Die in der folgenden Tabelle angezeigten Bandbreiten entsprechen den dokumentierten AWS-Grenzen für jeden Instanztyp.  Diese Beschränkungen entsprechen nicht vollständig dem, was Cloud Volumes ONTAP bieten kann.  Die erwartete Leistung finden Sie unter https://www.netapp.com/pdf.html?item=/media/9088-tr4383pdf.pdf["NetApp Technical Report 4383: Leistungscharakterisierung von Cloud Volumes ONTAP in Amazon Web Services mit Anwendungs-Workloads"^] .
+
+[cols="8*"]
+|===
+| Lizenz | Unterstützte Instanz | vCPU | RAM | Flash-Cache ^1^ | Netzwerkbandbreite (Gbit/s) | EBS-Bandbreite (Mbit/s) | Hohe Schreibgeschwindigkeit ^2^ 
+
+
+| *Explore oder eine andere Lizenz* | m5.xlarge ^6^ | 4 | 16 | Nicht unterstützt | Bis zu 10 | Bis zu 4.750 | Unterstützt (nur einzelner Knoten) 
+
+
+.3+| *Standard- oder jede andere Lizenz* | r5.xlarge ^6^ | 4 | 32 | Nicht unterstützt | Bis zu 10 | Bis zu 4.750 | Unterstützt (nur einzelner Knoten) 
+
+
+| m5a.2xlarge | 8 | 32 | Nicht unterstützt | Bis zu 10 | Bis zu 2.880 | Unterstützt 
+
+
+| m5.2xlarge ^6^ | 8 | 32 | Nicht unterstützt | Bis zu 10 | Bis zu 4.750 | Unterstützt 
+
+
+.22+| *Premium oder jede andere Lizenz* | m5n.2xlarge | 8 | 32 | Nicht unterstützt | Bis zu 25 | Bis zu 4.750 | Unterstützt 
+
+
+| r5.2xlarge ^6^ | 8 | 64 | Nicht unterstützt | Bis zu 10 | Bis zu 4.750 | Unterstützt 
+
+
+| r5d.2xlarge | 8 | 64 | Unterstützt | Bis zu 10 | Bis zu 4.750 | Unterstützt 
+
+
+| c5d.4xlarge ^6^ | 16 | 32 | Unterstützt | Bis zu 10 | 4.570 | Unterstützt 
+
+
+| m5.4xlarge ^6^ | 16 | 64 | Nicht unterstützt | Bis zu 10 | 4.750 | Unterstützt 
+
+
+| m5dn.4xlarge | 16 | 64 | Unterstützt | Bis zu 25 | 4.750 | Unterstützt 
+
+
+| m5d.8xlarge | 32 | 128 | Unterstützt | 10 | 6.800 | Unterstützt 
+
+
+| r5.8xlarge | 32 | 256 | Nicht unterstützt | 10 | 6.800 | Unterstützt 
+
+
+| c5.9xlarge | 36 | 72 | Nicht unterstützt | 10 | 9.500 | Unterstützt 
+
+
+| c5d.9xlarge | 36 | 72 | Unterstützt | 10 | 9.500 | Unterstützt 
+
+
+| c5n.9xlarge | 36 | 96 | Nicht unterstützt | 50 | 9.500 | Unterstützt 
+
+
+| c5a.12xlarge | 48 | 96 | Nicht unterstützt | 12 | 4.750 | Unterstützt 
+
+
+| c5.18xlarge | 64 ^4^ | 144 | Nicht unterstützt | 25 | 19.000 | Unterstützt 
+
+
+| c5d.18xlarge | 64 ^4^ | 144 | Unterstützt | 25 | 19.000 | Unterstützt 
+
+
+| m5d.12xlarge | 48 | 192 | Unterstützt | 12 | 9.500 | Unterstützt 
+
+
+| m5dn.12xlarge | 48 | 192 | Unterstützt | 50 | 9.500 | Unterstützt 
+
+
+| c5n.18xlarge | 64 ^4^ | 192 | Nicht unterstützt | 100 | 19.000 | Unterstützt 
+
+
+| m5a.16xlarge | 64 | 256 | Nicht unterstützt | 12 | 9.500 | Unterstützt 
+
+
+| m5.16xlarge | 64 | 256 | Nicht unterstützt | 20 | 13.600 | Unterstützt 
+
+
+| r5.12xlarge ^3^ | 48 | 384 | Nicht unterstützt | 10 | 9.500 | Unterstützt 
+
+
+| m5dn.24xlarge | 64 ^4^ | 384 | Unterstützt | 100 | 19.000 | Unterstützt 
+
+
+| m6id.32xlarge | 64 ^4^ | 512 | Unterstützt | 50 | 40.000 | Unterstützt 
+|===
+. Einige Instanztypen umfassen lokalen NVMe-Speicher, den Cloud Volumes ONTAP als _Flash Cache_ verwendet.  Flash Cache beschleunigt den Datenzugriff durch intelligentes Echtzeit-Caching kürzlich gelesener Benutzerdaten und NetApp Metadaten.  Es eignet sich für Workloads mit vielen zufälligen Lesevorgängen, darunter Datenbanken, E-Mail und Dateidienste.  Um die Leistungsverbesserungen des Flash Cache nutzen zu können, muss die Komprimierung auf allen Volumes deaktiviert werden. https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-flash-cache.html["Erfahren Sie mehr über Flash Cache"^] .
+. Cloud Volumes ONTAP unterstützt bei Verwendung eines HA-Paares mit den meisten Instanztypen eine hohe Schreibgeschwindigkeit.  Bei Verwendung eines Einzelknotensystems wird bei allen Instanztypen eine hohe Schreibgeschwindigkeit unterstützt. https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-write-speed.html["Erfahren Sie mehr über die Wahl der Schreibgeschwindigkeit"^] .
+. Der Instanztyp r5.12xlarge weist eine bekannte Einschränkung hinsichtlich der Supportfähigkeit auf.  Wenn ein Knoten aufgrund einer Panik unerwartet neu gestartet wird, sammelt das System möglicherweise keine Kerndateien, die zur Fehlerbehebung und zur Behebung der Problemursache verwendet werden.  Der Kunde akzeptiert die Risiken und eingeschränkten Supportbedingungen und trägt die gesamte Supportverantwortung, wenn dieser Zustand eintritt.  Diese Einschränkung betrifft neu bereitgestellte HA-Paare und HA-Paare, die von 9.8 aktualisiert wurden.  Die Einschränkung betrifft nicht neu bereitgestellte Einzelknotensysteme.
+. Während diese EC2-Instanztypen mehr als 64 vCPUs unterstützen, unterstützt Cloud Volumes ONTAP nur bis zu 64 vCPUs.
+. Wenn Sie einen EC2-Instanztyp auswählen, können Sie angeben, ob es sich um eine gemeinsam genutzte oder eine dedizierte Instanz handelt.
+. AWS Local Zones werden in den folgenden EC2-Instance-Typfamilien mit den Größen xlarge bis 4xlarge unterstützt: M5, C5, C5d, R5 und R5d. link:https://aws.amazon.com/about-aws/global-infrastructure/localzones/features/?nc=sn&loc=2["Die aktuellsten und vollständigen Informationen zu den unterstützten EC2-Instanztypen in lokalen Zonen finden Sie bei AWS."^] .
++
+Hohe Schreibgeschwindigkeiten werden bei diesen Instanztypen in AWS Local Zones nicht unterstützt.
+
+
+
+
+
+=== c4-, m4- und r4-Instanzen werden nicht mehr unterstützt
+
+Cloud Volumes ONTAP unterstützt die EC2-Instanztypen c4, m4 und r4 in AWS nicht mehr.  Wenn Ihr System auf einer c4-, m4- oder r4-Instanz läuft, wechseln Sie zu einer c5-, m5- oder r5-Instanz.  Sie können erst auf diese Version aktualisieren, wenn Sie den Instanztyp ändern.
+
+link:https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-change-ec2-instance.html["Erfahren Sie, wie Sie den EC2-Instanztyp für Cloud Volumes ONTAP ändern"^] .
+
+Weitere Informationen finden Sie unter:
+
+* https://kb.netapp.com/Cloud/Cloud_Volumes_ONTAP/Converting_an_AWS_Xen_CVO_instance_to_Nitro_KVM["Wissensdatenbank-Artikel (KB): Konvertieren einer AWS Xen CVO-Instanz in Nitro KVM"^]
+* https://kb.netapp.com/Cloud/Cloud_Volumes_ONTAP/Unable_to_change_the_instance_type_from_r4_to_r5_with_disk_count_error["KB-Artikel: Der Instanztyp kann aufgrund eines Datenträgeranzahlfehlers nicht von R4 auf R5 geändert werden."^]
+* link:https://mysupport.netapp.com/info/communications/ECMLP2880231.html["Erfahren Sie mehr über das Ende der Verfügbarkeit und des Supports für diese Instanztypen"^]
+
+
+
+
+== Unterstützte Regionen
+
+Informationen zum AWS-Regionssupport finden Sie unter https://bluexp.netapp.com/cloud-volumes-global-regions["Cloud Volumes Globale Regionen"^] .

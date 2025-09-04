@@ -1,0 +1,254 @@
+---
+sidebar: sidebar 
+permalink: reference-limits-gcp.html 
+keywords: limits, maximum, storage, aggregates, disks, volumes, capacity, luns, size, storage virtual machine, SVM 
+summary: Cloud Volumes ONTAP verfügt in Google Cloud über Speicherkonfigurationslimits, um einen zuverlässigen Betrieb zu gewährleisten.  Um die beste Leistung zu erzielen, konfigurieren Sie Ihr System nicht auf die Maximalwerte. 
+---
+= Speicherlimits für Cloud Volumes ONTAP in Google Cloud
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ./media/
+
+
+[role="lead"]
+Cloud Volumes ONTAP verfügt über Speicherkonfigurationsgrenzen, um einen zuverlässigen Betrieb zu gewährleisten.  Um die beste Leistung zu erzielen, konfigurieren Sie Ihr System nicht auf die Maximalwerte.
+
+
+
+== Maximale Systemkapazität nach Lizenz
+
+Die maximale Systemkapazität für ein Cloud Volumes ONTAP -System wird durch seine Lizenz bestimmt. Die maximale Systemkapazität umfasst festplattenbasierten Speicher sowie Objektspeicher, der für die Datenschichtung verwendet wird.
+
+NetApp unterstützt keine Überschreitung der Systemkapazitätsgrenze. Wenn Sie das lizenzierte Kapazitätslimit erreichen, zeigt BlueXP eine Aktionsmeldung an und erlaubt Ihnen nicht mehr, zusätzliche Festplatten hinzuzufügen.
+
+Bei einigen Konfigurationen verhindern Festplattenlimits, dass Sie die Kapazitätsgrenze erreichen, wenn Sie nur Festplatten verwenden.  Sie können die Kapazitätsgrenze erreichen, indem Sie https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-data-tiering.html["Tiering inaktiver Daten in den Objektspeicher"^] .  Weitere Einzelheiten finden Sie in den Festplattenbeschränkungen weiter unten.
+
+.Kapazitätslimit für kapazitätsbasierte Lizenzen
+Mit der kapazitätsbasierten Lizenzierung unterstützt jedes Cloud Volumes ONTAP -System die Einstufung in den Objektspeicher. Die gesamte abgestufte Kapazität kann bis zum Bucket-Limit des Cloud-Anbieters skaliert werden. Obwohl die Lizenz keine Kapazitätsbeschränkungen vorsieht, sollten Sie die https://www.netapp.com/pdf.html?item=/media/17239-tr-4598.pdf["Best Practices für FabricPool"^] um optimale Leistung, Zuverlässigkeit und Kosteneffizienz bei der Konfiguration und Verwaltung der Tiering-Ebene sicherzustellen. Weitere Informationen finden Sie im  https://cloud.google.com/storage/docs/buckets["Google Cloud-Dokumentation"^] für weitere Informationen.
+
+Kapazitätsgrenzen für andere Lizenztypen::
+
+
+[cols="25,75"]
+|===
+| Lizenz | Maximale Systemkapazität (Festplatten + Objektspeicher) 
+
+
+| Freemium | 500 GB 
+
+
+| PAYGO Entdecken | 2 TB (Daten-Tiering wird bei Explore nicht unterstützt) 
+
+
+| PAYGO-Standard | 10 TB 
+
+
+| PAYGO Premium | 368 TB 
+
+
+| Knotenbasierte Lizenz | 2 PiB (erfordert mehrere Lizenzen) 
+|===
+.Gilt die lizenzierte Kapazitätsgrenze für ein HA-Paar pro Knoten oder für das gesamte HA-Paar?
+Die Kapazitätsgrenze gilt für das gesamte HA-Paar. Es ist nicht pro Knoten. Wenn Sie beispielsweise die Premium-Lizenz verwenden, können Sie zwischen beiden Knoten über eine Kapazität von bis zu 368 TB verfügen.
+
+.Werden gespiegelte Daten bei einem HA-Paar auf die lizenzierte Kapazitätsgrenze angerechnet?
+Nein, das tut es nicht. Daten in einem HA-Paar werden synchron zwischen den Knoten gespiegelt, sodass die Daten im Falle eines Ausfalls in Google Cloud verfügbar sind. Wenn Sie beispielsweise eine 8-TB-Festplatte auf Knoten A kaufen, weist BlueXP auch eine 8-TB-Festplatte auf Knoten B zu, die für gespiegelte Daten verwendet wird. Obwohl eine Kapazität von 16 TB eingerichtet ist, werden nur 8 TB auf das Lizenzlimit angerechnet.
+
+
+
+== Gesamtgrenzen
+
+Cloud Volumes ONTAP gruppiert Google Cloud Platform-Festplatten in _Aggregate_.  Aggregate stellen Speicherplatz für Volumes bereit.
+
+[cols="2*"]
+|===
+| Parameter | Limit 
+
+
+| Maximale Anzahl von Datenaggregaten ^1^  a| 
+* 99 für einen einzelnen Knoten
+* 64 für ein ganzes HA-Paar
+
+
+
+
+| Maximale Aggregatgröße | 256 TB Rohkapazität ^2^ 
+
+
+| Festplatten pro Aggregat | 1-6 ^3^ 
+
+
+| Maximale Anzahl von RAID-Gruppen pro Aggregat | 1 
+|===
+Hinweise:
+
+. Die maximale Anzahl von Datenaggregaten umfasst nicht das Stammaggregat.
+. Die Festplatten, aus denen das Aggregat besteht, bestimmen die Kapazitätsgrenze des Aggregats. Diese Begrenzung umfasst nicht den Objektspeicher, der für die Datenschichtung verwendet wird.
+. Alle Festplatten in einem Aggregat müssen die gleiche Größe haben.
+
+
+
+
+== Festplatten- und Tiering-Grenzwerte
+
+Die folgende Tabelle zeigt die maximale Systemkapazität mit Festplatten allein sowie mit Festplatten und Cold Data Tiering zum Objektspeicher.  Die Festplattenlimits gelten speziell für Festplatten, die Benutzerdaten enthalten.  Die Beschränkungen umfassen nicht die Startdiskette, die Root-Diskette oder den NVRAM.
+
+[cols="60,40"]
+|===
+| Parameter | Limit 
+
+
+| Maximale Anzahl an Datenträgern  a| 
+* 124 für Einzelknotensysteme
+* 123 pro Knoten für HA-Paare
+
+
+
+
+| Maximale Festplattengröße | 64 TB 
+
+
+| Maximale Systemkapazität nur mit Festplatten | 256 TB ^1^ 
+
+
+| Maximale Systemkapazität mit Festplatten und Cold Data Tiering in einen Google Cloud Storage-Bucket | Hängt von der Lizenz ab.  Beachten Sie die oben aufgeführten maximalen Systemkapazitätsgrenzen. 
+|===
+^1^ Dieses Limit wird durch die Limits für virtuelle Maschinen in der Google Cloud Platform definiert.
+
+
+
+== Speicher-VM-Grenzwerte
+
+Einige Konfigurationen ermöglichen Ihnen die Erstellung zusätzlicher Storage-VMs (SVMs) für Cloud Volumes ONTAP.
+
+Dies sind die getesteten Grenzen. Das Konfigurieren weiterer Speicher-VMs wird nicht unterstützt.
+
+https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/task-managing-svms-gcp.html["Erfahren Sie, wie Sie zusätzliche Speicher-VMs erstellen"^] .
+
+[cols="2*"]
+|===
+| Lizenztyp | Speicher-VM-Limit 
+
+
+| *Freemium*  a| 
+24 Speicher-VMs insgesamt ^1^
+
+
+
+| *Kapazitätsbasiertes PAYGO oder BYOL* ^2^  a| 
+24 Speicher-VMs insgesamt ^1^
+
+
+
+| *Knotenbasiertes BYOL* ^3^  a| 
+24 Speicher-VMs insgesamt ^1^
+
+
+
+| *Knotenbasiertes PAYGO*  a| 
+* 1 Speicher-VM zum Bereitstellen von Daten
+* 1 Speicher-VM für die Notfallwiederherstellung
+
+
+|===
+. Diese 24 Speicher-VMs können Daten bereitstellen oder für die Notfallwiederherstellung (DR) konfiguriert werden.
+. Bei der kapazitätsbasierten Lizenzierung fallen keine zusätzlichen Lizenzkosten für zusätzliche Speicher-VMs an, es wird jedoch eine Mindestkapazitätsgebühr von 4 TiB pro Speicher-VM erhoben.  Wenn Sie beispielsweise zwei Speicher-VMs erstellen und jede über 2 TiB bereitgestellte Kapazität verfügt, werden Ihnen insgesamt 8 TiB in Rechnung gestellt.
+. Für knotenbasiertes BYOL ist für jede zusätzliche _Datenbereitstellungs_-Speicher-VM über die erste Speicher-VM hinaus, die standardmäßig mit Cloud Volumes ONTAP geliefert wird, eine Zusatzlizenz erforderlich. Wenden Sie sich an Ihr Account-Team, um eine Add-On-Lizenz für Storage-VMs zu erhalten.
++
+Für Speicher-VMs, die Sie für die Notfallwiederherstellung (DR) konfigurieren, ist keine Zusatzlizenz erforderlich (sie sind kostenlos), sie werden jedoch auf das Speicher-VM-Limit angerechnet.  Wenn Sie beispielsweise 12 datenbereitstellende Speicher-VMs und 12 für die Notfallwiederherstellung konfigurierte Speicher-VMs haben, haben Sie das Limit erreicht und können keine weiteren Speicher-VMs erstellen.
+
+
+
+
+
+== Logische Speichergrenzen
+
+[cols="22,22,56"]
+|===
+| Logischer Speicher | Parameter | Limit 
+
+
+.2+| *Dateien* | Maximale Größe ^2^ | 128 TB 
+
+
+| Maximal pro Volumen | Volumengrößenabhängig, bis zu 2 Milliarden 
+
+
+| * FlexClone -Volumes* | Hierarchische Klontiefe ^12^ | 499 
+
+
+.3+| * FlexVol -Volumes* | Maximum pro Knoten | 500 
+
+
+| Mindestgröße | 20 MB 
+
+
+| Maximale Größe ^3^ | 300 TiB 
+
+
+| *Qtrees* | Maximum pro FlexVol volume | 4.995 
+
+
+| *Schnappschusskopien* | Maximum pro FlexVol volume | 1.023 
+|===
+. Die hierarchische Klontiefe ist die maximale Tiefe einer verschachtelten Hierarchie von FlexClone -Volumes, die aus einem einzelnen FlexVol volume erstellt werden kann.
+. Ab ONTAP 9.12.1P2 liegt das Limit bei 128 TB.  In ONTAP 9.11.1 und früheren Versionen liegt das Limit bei 16 TB.
+. Die Erstellung von FlexVol volume mit einer maximalen Größe von 300 TiB wird mit den folgenden Tools und Mindestversionen unterstützt:
++
+** System Manager und die ONTAP CLI ab Cloud Volumes ONTAP 9.12.1 P2 und 9.13.0 P2
+** BlueXP ab Cloud Volumes ONTAP 9.13.1
+
+
+
+
+
+
+== iSCSI-Speicherlimits
+
+[cols="3*"]
+|===
+| iSCSI-Speicher | Parameter | Limit 
+
+
+.4+| *LUNs* | Maximum pro Knoten | 1.024 
+
+
+| Maximale Anzahl von LUN-Maps | 1.024 
+
+
+| Maximale Größe | 16 TB 
+
+
+| Maximal pro Volumen | 512 
+
+
+| *igroups* | Maximum pro Knoten | 256 
+
+
+.2+| *Initiatoren* | Maximum pro Knoten | 512 
+
+
+| Maximum pro igroup | 128 
+
+
+| *iSCSI-Sitzungen* | Maximum pro Knoten | 1.024 
+
+
+.2+| *LIFs* | Maximal pro Port | 1 
+
+
+| Maximal pro Portset | 32 
+
+
+| *Portsets* | Maximum pro Knoten | 256 
+|===
+
+
+== Cloud Volumes ONTAP HA-Paare unterstützen keine sofortige Speicherrückgabe
+
+Nach dem Neustart eines Knotens muss der Partner Daten synchronisieren, bevor er den Speicher zurückgeben kann.  Die zum erneuten Synchronisieren der Daten benötigte Zeit hängt von der Datenmenge ab, die von den Clients geschrieben wurde, während der Knoten ausgefallen war, und von der Datenschreibgeschwindigkeit während der Rückgabezeit.
+
+https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-ha-google-cloud.html["Erfahren Sie, wie Speicher in einem Cloud Volumes ONTAP HA-Paar funktioniert, das in Google Cloud ausgeführt wird"^] .
