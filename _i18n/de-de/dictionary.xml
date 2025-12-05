@@ -869,4 +869,8 @@
   <block id="1d3b6bcaa662fb815c64aec0bffd0aa5" category="inline-link-macro">Erfahren Sie, wie Sie ein Upgrade durchführen, wenn die Konsole Sie benachrichtigt.</block>
   <block id="c1c95a79ba017a924aa27e6d62ce3148" category="paragraph"><block ref="96dd1055c54322c16d3691cb1f44b801" category="inline-link-macro-rx"></block>.</block>
   <block id="31df6bd033eb0ed1992ab01c69319f02" category="paragraph">Sie können in AWS, Azure und Google Cloud von der Version 9.15.1 auf Cloud Volumes ONTAP 9.16.1 aktualisieren.  Die Konsole fordert Sie auf, kompatible Cloud Volumes ONTAP -Systeme auf diese Version zu aktualisieren.</block>
+  <block id="7ef6df0938a1a21d65adf91c16ee4ada" category="section-title">9.16.1 P9 (04. Dezember 2025)</block>
+  <block id="a3d80265a5f445fde1d382318e209365" category="paragraph">Der Cloud Volumes ONTAP 9.16.1 P9 Patch steht ab sofort für alle Cloud-Anbieter zum Upgrade bereit. Die Konsole fordert Sie auf, Ihre vorhandenen Systeme auf diese Patch-Version zu aktualisieren.</block>
+  <block id="4b99ccc66c896711e2667fd1c7cc5a70" category="inline-link-macro">Sehen Sie sich die Liste der im P9-Patch behobenen Fehler an.</block>
+  <block id="7f6e1fb823b042d6f89adc943de0068d" category="paragraph"><block ref="d4eee5025c7b384f4cdd08404339f7d4" category="inline-link-macro-rx"></block>(Anmeldung auf der NetApp Support-Site erforderlich).</block>
 </blocks>

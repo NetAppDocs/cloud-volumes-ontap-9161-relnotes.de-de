@@ -20,6 +20,14 @@ In den neuesten Versionen der NetApp Console werden auch neue Cloud Volumes ONTA
 
 
 
+== 9.16.1 P9 (04. Dezember 2025)
+
+Der Cloud Volumes ONTAP 9.16.1 P9 Patch steht ab sofort für alle Cloud-Anbieter zum Upgrade bereit. Die Konsole fordert Sie auf, Ihre vorhandenen Systeme auf diese Patch-Version zu aktualisieren.
+
+link:https://mysupport.netapp.com/site/products/all/details/cloud-volumes-ontap/downloads-tab/download/62632/9.16.1P9["Sehen Sie sich die Liste der im P9-Patch behobenen Fehler an."^](Anmeldung auf der NetApp Support-Site erforderlich).
+
+
+
 == 9.16.1 P8 (16. Oktober 2025)
 
 Der Cloud Volumes ONTAP 9.16.1 P8 Patch steht ab sofort für alle Cloud-Anbieter zum Upgrade bereit. Die Konsole fordert Sie auf, Ihre vorhandenen Systeme auf diese Patch-Version zu aktualisieren.
