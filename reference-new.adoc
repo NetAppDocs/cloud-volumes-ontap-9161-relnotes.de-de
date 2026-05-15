@@ -20,6 +20,14 @@ In den neuesten Versionen der NetApp Console werden auch neue Cloud Volumes ONTA
 
 
 
+== 9.16.1 P12 (14. Mai 2026)
+
+Der Cloud Volumes ONTAP 9.16.1 P12 Patch ist jetzt für alle Cloud-Anbieter zum Upgrade verfügbar. Die Console wird Sie auffordern, Ihre bestehenden Systeme auf diese Patch-Version zu aktualisieren.
+
+link:https://mysupport.netapp.com/site/products/all/details/cloud-volumes-ontap/downloads-tab/download/62632/9.16.1P12["Sehen Sie sich die Liste der im P12 Patch behobenen Fehler an"^] (NetApp Support-Website-Anmeldung erforderlich).
+
+
+
 == 9.16.1 P11 (17. Februar 2026)
 
 Der Cloud Volumes ONTAP 9.16.1 P11 Patch ist jetzt für alle Cloud-Anbieter zum Upgrade verfügbar. Die Konsole fordert Sie auf, Ihre bestehenden Systeme auf diese Patch-Version zu aktualisieren.
