@@ -18,6 +18,7 @@ In Azure werden mehrere Cloud Volumes ONTAP Konfigurationen unterstützt.
 
 
 
+[[supported-configurations-by-license]]
 == Unterstützte Konfigurationen nach Lizenz
 
 Cloud Volumes ONTAP ist in Azure als Einzelknotensystem und als Hochverfügbarkeitsknotenpaar (HA) für Fehlertoleranz und unterbrechungsfreien Betrieb verfügbar.
@@ -30,6 +31,7 @@ Die Spezifikationen der unterstützten Instanzen finden Sie im https://learn.mic
 
 
 
+[[single-node-systems]]
 === Einzelknotensysteme
 
 Sie können aus den folgenden kapazitätsbasierten oder knotenbasierten Lizenzkonfigurationen wählen, wenn Sie Cloud Volumes ONTAP als Einzelknotensystem in Azure bereitstellen.
@@ -230,6 +232,7 @@ Wenn Sie Cloud Volumes ONTAP hingegen mit einem anderen VM-Typ bereitgestellt ha
 ====
 
 
+[[ha-pairs]]
 === HA-Paare
 
 Sie können aus den folgenden Konfigurationen wählen, wenn Sie Cloud Volumes ONTAP als HA-Paar in Azure bereitstellen.
@@ -512,12 +515,14 @@ Hinweise:
 ====
 
 
+[[supported-disk-sizes]]
 == Unterstützte Datenträgergrößen
 
 In Azure kann ein Aggregat bis zu 12 Datenträger enthalten, die alle vom gleichen Typ und in der gleichen Größe sind.
 
 
 
+[[single-node-systems]]
 === Einzelknotensysteme
 
 Einzelknotensysteme verwenden Azure Managed Disks.  Die folgenden Datenträgergrößen werden unterstützt:
@@ -560,6 +565,7 @@ Einzelknotensysteme verwenden Azure Managed Disks.  Die folgenden Datenträgergr
 |===
 
 
+[[ha-pairs]]
 === HA-Paare
 
 HA-Paare verwenden Azure Managed Disks.  Die folgenden Datenträgertypen und -größen werden unterstützt.
@@ -579,6 +585,7 @@ HA-Paare verwenden Azure Managed Disks.  Die folgenden Datenträgertypen und -gr
 
 
 
+[[supported-regions]]
 == Unterstützte Regionen
 
 Informationen zur regionalen Unterstützung von Azure finden Sie unter https://bluexp.netapp.com/cloud-volumes-global-regions["Cloud Volumes Globale Regionen"^] .

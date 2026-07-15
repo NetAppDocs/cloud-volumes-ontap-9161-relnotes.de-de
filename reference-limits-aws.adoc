@@ -18,6 +18,7 @@ Cloud Volumes ONTAP verfügt über Speicherkonfigurationsgrenzen, um einen zuver
 
 
 
+[[maximum-system-capacity-by-license]]
 == Maximale Systemkapazität nach Lizenz
 
 Die maximale Systemkapazität umfasst festplattenbasierten Speicher sowie Objektspeicher, der für die Datenschichtung verwendet wird.
@@ -26,6 +27,7 @@ NetApp unterstützt keine Überschreitung der Systemkapazitätsgrenze. Wenn Sie 
 
 Bei einigen Konfigurationen verhindern Festplattenlimits, dass Sie die Kapazitätsgrenze erreichen, wenn Sie nur Festplatten verwenden.  In diesen Fällen können Sie die Kapazitätsgrenze erreichen, indem https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-data-tiering.html["Tiering inaktiver Daten in den Objektspeicher"^] .  Weitere Einzelheiten finden Sie weiter unten unter Kapazitäts- und Festplattengrenzen.
 
+[[cap-license-aws]]
 .Kapazitätslimit für kapazitätsbasierte Lizenzen
 Mit der kapazitätsbasierten Lizenzierung unterstützt jedes Cloud Volumes ONTAP -System die Einstufung in den Objektspeicher. Die gesamte abgestufte Kapazität kann bis zum Bucket-Limit des Cloud-Anbieters skaliert werden. Obwohl die Lizenz keine Kapazitätsbeschränkungen vorsieht, sollten Sie die https://www.netapp.com/pdf.html?item=/media/17239-tr-4598.pdf["Best Practices für FabricPool"^] um optimale Leistung, Zuverlässigkeit und Kosteneffizienz bei der Konfiguration und Verwaltung der Tiering-Ebene sicherzustellen. Weitere Informationen finden Sie im  https://docs.aws.amazon.com/AmazonS3/latest/userguide/BucketRestrictions.html["AWS-Dokumentation"^] für weitere Informationen.
 
@@ -59,6 +61,7 @@ Nein, das tut es nicht. Daten in einem AWS HA-Paar werden synchron zwischen den 
 
 
 
+[[aggregate-limits]]
 == Gesamtgrenzen
 
 Cloud Volumes ONTAP verwendet EBS-Volumes als Datenträger und gruppiert sie in _Aggregate_.  Aggregate stellen Speicherplatz für Volumes bereit.
@@ -97,6 +100,7 @@ Hinweise:
 
 
 
+[[disk-and-tiering-limits-by-ec2-instance]]
 == Festplatten- und Tiering-Limits nach EC2-Instance
 
 Die Kapazitätsgrenzen sind je nach der von Ihnen verwendeten EC2-Instance-Typfamilie und je nachdem, ob Sie ein Einzelknotensystem oder ein HA-Paar verwenden, unterschiedlich.
@@ -113,6 +117,7 @@ Die Beschränkungen umfassen nicht die Boot- und Root-Disk.
 
 
 
+[[limits-for-different-deployment-modes-of-capacity-based-licensing]]
 === Grenzen für verschiedene Bereitstellungsmodi der kapazitätsbasierten Lizenzierung
 
 Die folgenden Festplattenlimits gelten für Cloud Volumes ONTAP -Systeme, die ein kapazitätsbasiertes Lizenzpaket verwenden. https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-licensing.html["Erfahren Sie mehr über die Lizenzierungsoptionen von Cloud Volumes ONTAP"^]
@@ -168,6 +173,7 @@ NOTE: Informationen zu den maximalen Systemkapazitäts- und Daten-Tiering-Kapazi
 
 
 
+[[limits-for-different-deployment-modes-of-node-based-licensing]]
 === Beschränkungen für verschiedene Bereitstellungsmodi der knotenbasierten Lizenzierung
 
 Die folgenden Festplattenlimits gelten für Cloud Volumes ONTAP -Systeme, die eine knotenbasierte Lizenzierung verwenden. Dabei handelt es sich um das Lizenzierungsmodell der vorherigen Generation, mit dem Sie Cloud Volumes ONTAP pro Knoten lizenzieren konnten. Für bestehende Kunden ist die knotenbasierte Lizenzierung weiterhin verfügbar.
@@ -272,6 +278,7 @@ Die AWS Secret Cloud- und Top Secret Cloud-Regionen unterstützen den Kauf mehre
 
 
 
+[[storage-vm-limits]]
 == Speicher-VM-Grenzwerte
 
 Einige Konfigurationen ermöglichen Ihnen die Erstellung zusätzlicher Storage-VMs (SVMs) für Cloud Volumes ONTAP.
@@ -316,6 +323,7 @@ Für Speicher-VMs, die Sie für die Notfallwiederherstellung (DR) konfigurieren,
 
 
 
+[[storage-vm-limit-by-ec2-instance-type]]
 === Speicher-VM-Limit nach EC2-Instanztyp
 
 Wenn Sie eine zusätzliche Speicher-VM erstellen, müssen Sie dem Port e0a private IP-Adressen zuweisen.  Die folgende Tabelle gibt die maximale Anzahl privater IPs pro Schnittstelle sowie die Anzahl der IP-Adressen an, die nach der Bereitstellung von Cloud Volumes ONTAP auf Port e0a verfügbar sind.  Die Anzahl der verfügbaren IP-Adressen wirkt sich direkt auf die maximale Anzahl von Speicher-VMs für diese Konfiguration aus.
@@ -417,6 +425,7 @@ Da eine private IP-Adresse erforderlich ist, wird die Anzahl der zusätzlichen S
 
 
 
+[[file-and-volume-limits]]
 == Datei- und Volumenbeschränkungen
 
 [cols="22,22,56"]
@@ -459,6 +468,7 @@ Da eine private IP-Adresse erforderlich ist, wird die Anzahl der zusätzlichen S
 
 
 
+[[iscsi-storage-limits]]
 == iSCSI-Speicherlimits
 
 [cols="3*"]

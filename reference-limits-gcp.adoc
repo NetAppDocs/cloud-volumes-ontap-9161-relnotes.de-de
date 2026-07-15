@@ -18,6 +18,7 @@ Cloud Volumes ONTAP verfügt über Speicherkonfigurationsgrenzen, um einen zuver
 
 
 
+[[maximum-system-capacity-by-license]]
 == Maximale Systemkapazität nach Lizenz
 
 Die maximale Systemkapazität für ein Cloud Volumes ONTAP -System wird durch seine Lizenz bestimmt. Die maximale Systemkapazität umfasst festplattenbasierten Speicher sowie Objektspeicher, der für die Datenschichtung verwendet wird.
@@ -26,6 +27,7 @@ NetApp unterstützt keine Überschreitung der Systemkapazitätsgrenze. Wenn Sie 
 
 Bei einigen Konfigurationen verhindern Festplattenlimits, dass Sie die Kapazitätsgrenze erreichen, wenn Sie nur Festplatten verwenden.  Sie können die Kapazitätsgrenze erreichen, indem Sie https://docs.netapp.com/us-en/bluexp-cloud-volumes-ontap/concept-data-tiering.html["Tiering inaktiver Daten in den Objektspeicher"^] .  Weitere Einzelheiten finden Sie in den Festplattenbeschränkungen weiter unten.
 
+[[cap-license-gcp]]
 .Kapazitätslimit für kapazitätsbasierte Lizenzen
 Mit der kapazitätsbasierten Lizenzierung unterstützt jedes Cloud Volumes ONTAP -System die Einstufung in den Objektspeicher. Die gesamte abgestufte Kapazität kann bis zum Bucket-Limit des Cloud-Anbieters skaliert werden. Obwohl die Lizenz keine Kapazitätsbeschränkungen vorsieht, sollten Sie die https://www.netapp.com/pdf.html?item=/media/17239-tr-4598.pdf["Best Practices für FabricPool"^] um optimale Leistung, Zuverlässigkeit und Kosteneffizienz bei der Konfiguration und Verwaltung der Tiering-Ebene sicherzustellen. Weitere Informationen finden Sie im  https://cloud.google.com/storage/docs/buckets["Google Cloud-Dokumentation"^] für weitere Informationen.
 
@@ -59,6 +61,7 @@ Nein, das tut es nicht. Daten in einem HA-Paar werden synchron zwischen den Knot
 
 
 
+[[aggregate-limits]]
 == Gesamtgrenzen
 
 Cloud Volumes ONTAP gruppiert Google Cloud Platform-Festplatten in _Aggregate_.  Aggregate stellen Speicherplatz für Volumes bereit.
@@ -92,6 +95,7 @@ Hinweise:
 
 
 
+[[disk-and-tiering-limits]]
 == Festplatten- und Tiering-Grenzwerte
 
 Die folgende Tabelle zeigt die maximale Systemkapazität mit Festplatten allein sowie mit Festplatten und Cold Data Tiering zum Objektspeicher.  Die Festplattenlimits gelten speziell für Festplatten, die Benutzerdaten enthalten.  Die Beschränkungen umfassen nicht die Startdiskette, die Root-Diskette oder den NVRAM.
@@ -120,6 +124,7 @@ Die folgende Tabelle zeigt die maximale Systemkapazität mit Festplatten allein 
 
 
 
+[[storage-vm-limits]]
 == Speicher-VM-Grenzwerte
 
 Einige Konfigurationen ermöglichen Ihnen die Erstellung zusätzlicher Storage-VMs (SVMs) für Cloud Volumes ONTAP.
@@ -164,6 +169,7 @@ Für Speicher-VMs, die Sie für die Notfallwiederherstellung (DR) konfigurieren,
 
 
 
+[[logical-storage-limits]]
 == Logische Speichergrenzen
 
 [cols="22,22,56"]
@@ -206,6 +212,7 @@ Für Speicher-VMs, die Sie für die Notfallwiederherstellung (DR) konfigurieren,
 
 
 
+[[iscsi-storage-limits]]
 == iSCSI-Speicherlimits
 
 [cols="3*"]
@@ -247,6 +254,7 @@ Für Speicher-VMs, die Sie für die Notfallwiederherstellung (DR) konfigurieren,
 |===
 
 
+[[cloud-volumes-ontap-ha-pairs-do-not-support-immediate-storage-giveback]]
 == Cloud Volumes ONTAP HA-Paare unterstützen keine sofortige Speicherrückgabe
 
 Nach dem Neustart eines Knotens muss der Partner Daten synchronisieren, bevor er den Speicher zurückgeben kann.  Die zum erneuten Synchronisieren der Daten benötigte Zeit hängt von der Datenmenge ab, die von den Clients geschrieben wurde, während der Knoten ausgefallen war, und von der Datenschreibgeschwindigkeit während der Rückgabezeit.
